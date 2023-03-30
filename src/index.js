@@ -2,14 +2,14 @@ require("dotenv").config();
 
 const {
   Client,
-  GatewayIntentBits: { GuildMembers, GuildModeration },
+  GatewayIntentBits: { GuildMembers, GuildModeration, Guilds },
   Partials,
 } = require("discord.js");
 
 const targetRoleId = process.env.TARGET_ROLE_ID;
 
 const client = new Client({
-  intents: [GuildMembers, GuildModeration],
+  intents: [GuildMembers, GuildModeration, Guilds],
   partials: [Partials.GuildMember],
 });
 
@@ -22,12 +22,9 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
     console.log(
       `${oldMember.user.username}#${oldMember.user.discriminator} approved rule screen.`
     );
-    newMember.roles
-      .add(targetRoleId)
-      .then(() => {
-        console.log("Role add success!");
-      })
-      .catch(() => {});
+    newMember.roles.add(targetRoleId).then(() => {
+      console.log("Role add success!");
+    });
   }
 });
 
