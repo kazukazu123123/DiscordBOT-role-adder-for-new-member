@@ -2,14 +2,14 @@ require("dotenv").config();
 
 const {
   Client,
-  GatewayIntentBits: { GuildMembers, GuildModeration, Guilds },
+  GatewayIntentBits: { GuildMembers, Guilds },
   Partials,
 } = require("discord.js");
 
 const targetRoleId = process.env.TARGET_ROLE_ID;
 
 const client = new Client({
-  intents: [GuildMembers, GuildModeration, Guilds],
+  intents: [GuildMembers, Guilds],
   partials: [Partials.GuildMember],
 });
 
