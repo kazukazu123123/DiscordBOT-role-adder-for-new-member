@@ -20,7 +20,6 @@ client.on("ready", () => {
 });
 
 client.on("guildMemberUpdate", (oldMember, newMember) => {
-  console.log(newMember);
   if (oldMember.pending && !newMember.pending) {
     console.log(
       `${oldMember.user.username}#${oldMember.user.discriminator} approved rule screen.`
