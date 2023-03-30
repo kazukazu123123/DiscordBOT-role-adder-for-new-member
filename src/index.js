@@ -2,14 +2,14 @@ require("dotenv").config();
 
 const {
   Client,
-  GatewayIntentBits: { GuildMembers, Guilds },
+  GatewayIntentBits: { GuildMembers },
   Partials,
 } = require("discord.js");
 
 const targetRoleId = process.env.TARGET_ROLE_ID;
 
 const client = new Client({
-  intents: [GuildMembers, Guilds],
+  intents: [GuildMembers],
   partials: [Partials.GuildMember],
 });
 
@@ -19,6 +19,7 @@ client.on("ready", () => {
 
 client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (oldMember.pending && !newMember.pending) {
+    newMember.guild.fetch();
     console.log(
       `${oldMember.user.username}#${oldMember.user.discriminator} approved rule screen.`
     );
