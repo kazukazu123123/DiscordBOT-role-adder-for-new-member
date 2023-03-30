@@ -8,7 +8,7 @@ const {
   Partials,
 } = require("discord.js");
 
-const targetRoleId = "1090900993677467728";
+const targetRoleId = process.env.TARGET_ROLE_ID;
 
 const client = new Client({
   intents: [GuildMembers, GuildModeration],
