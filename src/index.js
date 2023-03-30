@@ -24,9 +24,12 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
     console.log(
       `${oldMember.user.username}#${oldMember.user.discriminator} approved rule screen.`
     );
-    newMember.roles.add(targetRoleId).then(() => {
-      console.log("Role add success!");
-    });
+    newMember.roles
+      .add(targetRoleId)
+      .then(() => {
+        console.log("Role add success!");
+      })
+      .catch(() => {});
   }
 });
 
