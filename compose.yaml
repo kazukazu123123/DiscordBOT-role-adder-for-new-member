@@ -1,0 +1,8 @@
+services:
+  discordbot-role-add-test:
+    image: discordbot-role-add-test
+    container_name: discordbot-role-add-test
+    build: .
+    pull_policy: always
+    env_file: .env
+    restart: unless-stopped

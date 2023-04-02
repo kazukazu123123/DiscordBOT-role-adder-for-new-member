@@ -1,17 +1,15 @@
 require("dotenv").config();
 
-const fs = require("fs");
-const path = require("path");
 const {
   Client,
-  GatewayIntentBits: { GuildMembers, GuildModeration },
+  GatewayIntentBits: { GuildMembers },
   Partials,
 } = require("discord.js");
 
-const targetRoleId = "1090900993677467728";
+const targetRoleId = process.env.TARGET_ROLE_ID;
 
 const client = new Client({
-  intents: [GuildMembers, GuildModeration],
+  intents: [GuildMembers],
   partials: [Partials.GuildMember],
 });
 
@@ -21,19 +19,17 @@ client.on("ready", () => {
 
 client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (oldMember.pending && !newMember.pending) {
+    newMember.guild.fetch();
     console.log(
       `${oldMember.user.username}#${oldMember.user.discriminator} approved rule screen.`
     );
-    newMember.roles
-      .add(targetRoleId)
-      .then(() => {
-        console.log("Role add success!");
-      })
-      .catch(() => {});
+    newMember.roles.add(targetRoleId).then(() => {
+      console.log("Role add success!");
+    });
   }
 });
 
-process.on("SIGTERM", client.destroy);
-process.on("SIGINT", client.destroy);
+process.on("SIGTERM", client.destroy.bind(client));
+process.on("SIGINT", client.destroy.bind(client));
 
 client.login();
