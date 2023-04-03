@@ -19,13 +19,20 @@ client.on("ready", () => {
 
 client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (oldMember.pending && !newMember.pending) {
-    newMember.guild.fetch();
     console.log(
       `${oldMember.user.username}#${oldMember.user.discriminator} approved rule screen.`
     );
-    newMember.roles.add(targetRoleId).then(() => {
-      console.log("Role add success!");
-    });
+    newMember.guild.roles
+      .fetch(targetRoleId)
+      .then((role) => {
+        newMember.roles
+          .add(role)
+          .then(() => {
+            console.log("Role add success!");
+          })
+          .catch((e) => console.log("Faile to add role:", e));
+      })
+      .catch((e) => console.log("Faile to fetch role:", e));
   }
 });
 
